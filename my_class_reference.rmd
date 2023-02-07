@@ -46,5 +46,11 @@ The function to use here is called 'read_csv' and we pass it either a file path 
 ```{r}
 wes_moore_contributions <- read_csv("https://raw.githubusercontent.com/stephenneukam/CNS_Annapolis/main/Campaign_finance/Moore_ContributionsList.csv")
 ```
+### How to count rows
 
-
+You use the 'n()' function to count rows, like so:
+```{r}
+dataframe %>% 
+  group_buy(some_column) %>% 
+summarize(count= n())
+```
