@@ -239,7 +239,7 @@ No code here; I want you to provide three questions that this data suggests to y
 
 1.How many students are taking the courses for their major?
 
-2. What's the total number of students in each department?
+2. Which department has fewest number of seats?
 
 
 3.  What courses are requiring the maximum number of seats?
