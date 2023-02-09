@@ -122,14 +122,13 @@ In the space below, write the name of the course from the first row of the "titl
 **Task** look at the environment window at right in RStudio for umd_courses. It's next to a small blue circle with a white arrow in it. Click on the umd_courses -- not the blue circle. It will open the dataframe as an interactive table. Scroll down to see additional rows. Scroll left to see additional columns. Click on a column name to sort by that column.
 
 ### Task 9: Group and count
-
-
+**Answer** 21 rows
 
 **Task** Run the following codeblock:
 
 ```{r}
 umd_courses %>%
-  group_by(term)
+  group_by(term) %>% 
   summarise(
     count_classes = n()
   )
@@ -137,7 +136,7 @@ umd_courses %>%
 
 Describe what you think each line of this code is doing below, based on the result:
 
-**Answer**
+**Answer** Each line of code is counting the number of classes by terms.
 
 ### Task 10: Adding arrange to sort the data
 
@@ -153,7 +152,7 @@ umd_courses %>%
 ```
 
 Compared to the previous codeblock, what has changed and how did that affect the result? 
-**Answer**
+**Answer** The number of count classes have been arranged from least to highest. 
 
 ### Task 11: Grouping by multiple columns
 
@@ -170,7 +169,7 @@ umd_courses %>%
 
 Compared to the previous codeblock, how did the output change and what in the code changed it?
 
-**Answer**
+**Answer** The entire set was grouped by "term" and "department."
 
 ### Task 12: Other summary functions
 
