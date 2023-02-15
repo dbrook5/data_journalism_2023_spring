@@ -321,7 +321,7 @@ Mutate is even more useful when combined with some additional functions. Let's k
 
 **Task** Run the following code and look at the output. Then write a sentence or two describing what you think the mutate statement is doing step by step.
 
-**Answer**
+**Answer** I think it's organizing the breaking down the data by state name and initials.                     
 
 ```{r}
 maryland_expenses_with_state <- maryland_expenses %>%
