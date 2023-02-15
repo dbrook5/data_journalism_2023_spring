@@ -357,7 +357,7 @@ maryland_expenses_with_state %>%
 
 Does this answer make sense to you? Why or why not?
 
-**Answer** No, it doesn't make sense to me because WV is in VA and there's a disparity in their <dbl>,
+**Answer** No, it doesn't make sense to me because WV is in VA and there's a disparity in their <dbl>.
 
 Mutate is there to make your data more useful and to make it easier for you to ask more and better questions of it.
 
