@@ -248,9 +248,7 @@ Describe what you think this code is doing below.
 
 ```{r}
 # make it a percentage
-general_22 <- general_22 %>%
-  mutate(
-    pct_moore = (moore/total_votes)*100
+  
   )
 ```
 
