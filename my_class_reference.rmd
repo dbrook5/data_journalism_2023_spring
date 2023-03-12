@@ -51,6 +51,11 @@ wes_moore_contributions <- read_csv("https://raw.githubusercontent.com/stephenne
 You use the 'n()' function to count rows, like so:
 ```{r}
 dataframe %>% 
-  group_buy(some_column) %>% 
+  group_by(some_column) %>% 
 summarize(count= n())
 ```
+
+### Remember this 
+group_by(date) %>% 
+  summarize(count= n()) %>% 
+  arrange(desc(count))
