@@ -35,9 +35,7 @@ Let's say that we have Maryland county voter registration data from four differe
 **Answer** Yes, they all have the same structure.
 
 ```{r}
-county_voters_2016 <- read_csv("data/county_voters_2016.csv")
-county_voters_2018 <- read_csv("data/county_voters_2018.csv")
-county_voters_2020 <- read_csv("data/county_voters_2020.csv")
+  
 county_voters_2022 <- read_csv("data/county_voters_2022.csv")
 ```
 
