@@ -92,7 +92,7 @@ calls911_maryland_and_baltimore %>%
   filter(pct_under_18 > 75) %>% 
  group_by(zip_code, population) %>% # Which "date" in 2022 had the most overdose calls? group by our date column, and if you group_by
   summarize(count= n()) %>% # "how many" means we're counting using n()
-    mutate(people_per= count/population*1000) %>% 
+    mutate(people_per = count/population*1000) %>%
   arrange(desc(count)) # "the most" means were arranging in desc order by what we count
 ```
 
