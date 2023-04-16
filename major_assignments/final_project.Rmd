@@ -18,6 +18,14 @@ pbp_2023 %>%
 pbp_2023 <- seconds %>% 
   filter(action=="REBOUND" | vendor_name=="REBOUND")
 ```
+```{r}
+# question 1: Which Big Ten team was the best at steals in the first quarter?”
+pbp_2023 %>% 
+  group_by(conference,team,action,seconds) %>% 
+  summarize(total = n()) %>%
+      arrange(conference,team,action,seconds)
+```
+
 
 
 ```
