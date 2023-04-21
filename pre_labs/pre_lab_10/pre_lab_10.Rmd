@@ -62,8 +62,7 @@ Simlar to `readr`, the `sf` library has functions to read geographic data. In th
 
 ### Task: Load data
 **Task** Run the following code to load data. Describe what you see in the answer space below. What columns exist in this data?
-**Answer**
-
+**Answer** In the dataset, I noticed that there are a few new columns that I haven't seen before and ones that are differently named. For example, there is a column titled "geometry," "Shape_Length," and "Shape Area." The "geometry" column also has information referring to the multiple polygons. 
 ```{r}
 md_zips <- st_read("data/md_zips/BNDY_ZIPCodes11Digit_MDP.shp")
 
@@ -76,7 +75,7 @@ Let's look at these zip codes We have 526 of them, according to this data.
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below: what kind of information does it contain?
-**Answer**
+**Answer** Once I ran the code, I was immediately greeted by the same columns from the dataset.It contains zip code data, object ID, existing, shape_area, existing code ID's, and shape_length.
 
 ```{r}
 View(md_zips)
@@ -86,8 +85,7 @@ But where in Maryland are these places? We can simply plot them on a longitude-l
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
-
+**Answer** In the space below, there is a map of Maryland's zip_code data. Based on line 93, the theme of the map is very original and plain. In past labs, we have created more elegant maps to accurately depict our data.
 ```{r}
 md_zips %>%
   ggplot() +
@@ -109,7 +107,7 @@ Then load it:
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** Once I installed the 'tigris' package, it gave me a prompt of "set `options(tigris_use_cache = TRUE)." 
 
 ```{r}
 # install.packages('tigris')
@@ -134,7 +132,7 @@ This county shapefile has all 3233 U.S. counties.  We only want the Maryland cou
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** I noticed that a new dataset was created and the column "STATEFP" was filtered to Maryland's FP number of 24.
 
 ```{r}
 md_counties <- counties %>%
@@ -146,7 +144,7 @@ To see what this looks like, let's plot it out with ggplot. We can pretty clearl
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** There is a map of Maryland counties that represents the data of the longitude and latitude for the state.
 
 ```{r}
 md_counties %>%
@@ -163,8 +161,7 @@ We're also going to change things up a bit to put the datasets we want to displa
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
-
+**Answer** The map is almost identical to the one in the previous question, but with subtle differences. The differences include lines within the Montgomery County data to depict the layout of the county.
 ```{r}
 ggplot() +
   geom_sf(data=md_counties) +
@@ -188,9 +185,9 @@ View(foreclosure_zip_march_2023)
 ```
 Now we can join the zip codes to the foreclosure data.
 
-### Task: Run code to join the zip code shapes with the foreclosure notice data
+### Task: Run code to join the zip code data to the foreclosure data
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** There was a new dataset created and I noticed that there was a new column titled "ZIPCODE1." The first 10 entries in the columns started with the digits of "215." 
 
 ```{r}
 zip_codes_with_foreclosures <- md_zips %>% left_join(foreclosure_zip_march_2023, by=c("ZIPCODE1"="zip"))
@@ -200,7 +197,7 @@ Now we can use color to distinguish zip codes from each other. Let's use the num
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** After running code, I noticed that the map looks completely different. This particular map is filled with color and also has a range from March 2023 on the right side of the map.
 
 ```{r}
 ggplot() +
@@ -235,7 +232,7 @@ First, we'll go out and get the county foreclosure notices and population data f
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** After running the following codeblock, two separate datasets were created. The “md_county_population” dataset has GEOID, variable, and geometry columns. While, the “md_county_notices” has date, type, county, and the number of notices in the columns of the dataset. 
 
 ```{r}
 md_county_notices <- read_csv("data/Maryland_Foreclosure_Data_by_County.csv") %>% slice(1) %>% pivot_longer(cols=-c('Date', 'Type'), names_to='county', values_to = 'notices')
@@ -249,7 +246,7 @@ Ultimately, we're going to join this county table with population with foreclosu
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** 
 
 ```{r}
 md_county_population <- get_acs(geography = "county",
@@ -268,7 +265,7 @@ But there's a problem.  The column in our population data that has county names 
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** There was a dataset that featured four columns. The columns are “date,” “type,” “county,” and “notices.” The first several data entries occurred on 3/1/2023 with a “notice of intent to foreclose.” The difference is that the foreclosure occurs at different countries: from Allegany County to Dorchester County. The dataset also lists the counties as "Montgomery County, Maryland."
 
 ```{r}
 md_county_population
@@ -282,7 +279,7 @@ Let's clean the population table. We're going to rename the "NAME" column to "co
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer**There was a dataset that featured four columns. The columns are “date,” “type,” “county,” and “notices.” The first several data entries occurred on 3/1/2023 with a “notice of intent to foreclose.” The difference is that the foreclosure occurs at different countries: from Allegany County to Dorchester County.
 
 ```{r}
 md_county_population <- md_county_population %>%
@@ -298,7 +295,7 @@ Now we can join them!
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer**This codeblock produced a different dataset compared to the one in the previous question. In the previous question, there were two columns in “county population” and “geometry.” While in this question, it has three columns in “county population,” “date,” “type notices,” and “geometry.” 
 
 ```{r}
 md_pop_with_foreclosures <- md_county_population %>%
@@ -310,7 +307,7 @@ Our final step before visualization, let's calculate the number of foreclosure n
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer**In this question, I noticed a few differences from this current dataset to the previous one. I see that there’s been a new “rate” column and a new set of numbers. Based on line 315, I can tell that the number has already been multiplied by 100. 
 
 ```{r}
 md_pop_with_foreclosures <- md_county_population %>%
@@ -327,7 +324,7 @@ Okay, now let's visualize.  We're going to build a choropleth map, with the colo
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer**There’s a graph below with different shades of blue. On the right side of the graph, there is a graph that ranged from 0.5 to 2.0. 
 
 ```{r}
 ggplot() +
@@ -338,7 +335,7 @@ This map is okay, but the color scale makes it hard to draw fine-grained differe
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer**This graph looks similar to the one in from the previous question. The difference is this map is colored purple, pink, black, and yellow. While, the previous map featured different shades of blue. 
 
 ```{r}
 ggplot() +
@@ -352,7 +349,7 @@ So let's change the color scale to a "log" scale, which will help us see those d
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below. What regional patterns do you see?
-**Answer**
+**Answer**This codeblock produced a graph that looked nearly identical to the previous questions graph, but has subtle differences. There’s a little  area colored black on the right side of the graph. The area colored black equals 0.7357589 based on the scale on the far right side. Furthermore, there are more areas colored black in the middle of the graph. I also believe there are less purple areas in the graph compared to the previous question. According to the graph, purple equals 1.0000000. 
 
 ```{r}
 ggplot() +
