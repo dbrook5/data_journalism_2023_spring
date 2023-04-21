@@ -349,7 +349,7 @@ So let's change the color scale to a "log" scale, which will help us see those d
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below. What regional patterns do you see?
-**Answer**This codeblock produced a graph that looked nearly identical to the previous questions graph, but has subtle differences. There’s a little  area colored black on the right side of the graph. The area colored black equals 0.7357589 based on the scale on the far right side. Furthermore, there are more areas colored black in the middle of the graph. I also believe there are less purple areas in the graph compared to the previous question. According to the graph, purple equals 1.0000000. 
+**Answer** This codeblock produced a graph that looked nearly identical to the previous questions graph, but has subtle differences. There’s a little  area colored black on the right side of the graph. The area colored black equals 0.7357589 based on the scale on the far right side. Furthermore, there are more areas colored black in the middle of the graph. I also believe there are less purple areas in the graph compared to the previous question. According to the graph, purple equals 1.0000000. 
 
 ```{r}
 ggplot() +
