@@ -90,8 +90,10 @@ ggplot() +
 ```{r}
 mdcounty_outages <- read_csv("data/county_outages_march2023.csv") %>% 
     mutate(outages_per= outage_customers/total_customers*1000) 
-# not done
+
 mdcounty_outages <- md_counties %>% left_join(voting_totals, by=c("GEOID"="GEOID"))
+# how to add a column and rename it
+mutate(calls_per = total_calls/estimate*1000) %>% arrange(desc(calls_per)) %>%
 
 
 ```
