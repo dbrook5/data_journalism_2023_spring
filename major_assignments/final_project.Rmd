@@ -16,7 +16,8 @@ pbp_2023 %>%
 ```
 ```{r}
 pbp_2023 <- seconds %>% 
-  filter(action=="REBOUND" | vendor_name=="REBOUND")
+  filter(action=="REBOUND" | vendor_name=="REBOUND") %>% 
+  mutate(player= jersey_number)
 ```
 ```{r}
 # question 1: Which Big Ten team was the best at steals in the first quarter?”
@@ -26,6 +27,13 @@ pbp_2023 %>%
       arrange(conference,team,action,seconds)
 ```
 
+```{r}
+# question #2 
+How many steals did Ohio State force in the first quarter all season?
+pbp_2023 %>%
+  group_by(team,type,conference) %>%
+  summarize()
+```
 
 
 ```
