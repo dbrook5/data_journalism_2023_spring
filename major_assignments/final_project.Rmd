@@ -15,8 +15,7 @@ pbp_2023 %>%
 ```
 ```{r}
 pbp_2023 %>% 
-  filter(action=="REBOUND", period== 4) %>% 
-  
+  filter(action=="REBOUND", period== 4) 
 ```
 
 ```{r}
@@ -38,7 +37,7 @@ group_by(team) %>%
 summarize(total_steals=n()) %>% 
   arrange(desc(total_steals))
 ```
-**A1. Maryland had 192 steals in the first quarter, which led the Big Ten.
+**A1** Maryland had 192 steals in the first quarter, which led the Big Ten.
 
 
 
@@ -55,7 +54,7 @@ group_by(team)%>%
 summarize(total_steals=n()) %>%
   arrange(desc(total_steals))
 ```
-**A2. The Terps collected 158 steals in the fourth quarter.
+**A2** The Terps collected 158 steals in the fourth quarter.
 
 ```{r}
 # question #3
@@ -67,9 +66,71 @@ group_by(team)%>%
 summarize(total_rebounds=n())%>%
   arrange(desc(total_rebounds))
 ```
-** Maryland grabbed the most rebounds in the fourth quarter with 612.
+**A3** Maryland grabbed the most rebounds in the fourth quarter with 612.
+
+```{r}
+# question 4 
+# which team made the most three pointers in the third quarter
+three_pntrs <- pbp_2023 %>%
+filter(str_detect(type, "3PTR")) %>%
+filter(str_detect(period, "3")) %>%
+group_by(team)%>%
+summarize(total_threes=n())%>%
+  arrange(desc(total_threes))
+```
+**A4** Ironically, Maryland made the most three-pointers in the third quarter with 292.
+
+```{r}
+# question 5
+# how many layups did Baylor guard Aijha Blackwell make in the fourth quarter all season?
+baylor_wbb <- pbp_2023 %>%
+filter(str_detect(team,"Baylor"))%>%
+filter(str_detect(player, "33")) %>%
+filter(str_detect(type, "LAYUP"))%>%
+group_by(player)%>%
+summarize(total_layups=n())%>%
+  arrange(desc(total_layups))
+```
+**A5** Baylor guard Aijha Blackwell made 13 layups in the fourth quarter during the season.
+
+```{r}
+# question 6
+# which team forced the most turnovers in the second quarter this season
+turnovers_wbb <- pbp_2023 %>%
+filter(str_detect(action,"TURNOVER")) %>%
+filter(str_detect(period,"2"))
+group_by(opponent) %>%
+summarize(total_turnovers=n())%>%
+arrange(desc(total_turnovers))
+```
+
+```{r}
+# question 7
+# how many points three pointers did Brinae Alexander score in the third quarter all season?
+umd_alexander <- pbp_2023%>%
+filter(str_detect(team,"Maryland"))%>%
+filter(str_detect(player, "05")) %>%
+filter(str_detect(type,"3PTR")) %>%
+filter(str_detect(action,"GOOD")) %>%
+filter(str_detect(period,"3")) %>%
+group_by(player)%>%
+summarize(alexander_threes=n())%>%
+  arrange(desc(alexander_threes))
+```
+**A7** Maryland guard Brinae Alexander made 34 three-pointers in the third quarter.
 
 
+```{r}
+# question 8
+# which team committed the most fouls in the first quarter this season?
+fouls_total <- pbp_2023 %>%
+filter(str_detect(action,"FOUL")) %>%
+filter(str_detect(period,"1")) %>%
+group_by(team)%>%
+summarize(total_fouls=n())%>%
+  arrange(desc(total_fouls))
+```
+**A9** This season,Maryland had the most first quarter fouls with 196.
 
 ```
 
