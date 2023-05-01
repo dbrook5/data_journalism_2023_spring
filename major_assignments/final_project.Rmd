@@ -11,29 +11,64 @@ pbp_2023 <- read_csv ("~/Downloads/pbp_2023_d1.csv")
 ```{r}
 pbp_2023 %>% 
   group_by(team,action) %>% 
-  summarize(total = n()) %>%
-      arrange(team,action)
+  summarize(total = n())
 ```
 ```{r}
-pbp_2023 <- seconds %>% 
-  filter(action=="REBOUND" | vendor_name=="REBOUND") %>% 
-  mutate(player= jersey_number)
-```
-```{r}
-# question 1: Which Big Ten team was the best at steals in the first quarter?”
 pbp_2023 %>% 
-  group_by(conference,team,action,seconds) %>% 
-  summarize(total = n()) %>%
-      arrange(conference,team,action,seconds)
+  filter(action=="REBOUND", period== 4) %>% 
+  
 ```
 
 ```{r}
-# question #2 
-How many steals did Ohio State force in the first quarter all season?
-pbp_2023 %>%
-  group_by(team,type,conference) %>%
-  summarize()
+
 ```
+
+
+
+
+```{r}
+# q1 which big ten team had the most steals in the first quarter?
+wbb_pbp <- pbp_2023 %>% 
+  #group_by(team,action,type,period) %>% 
+  #summarize(total = n()) %>%
+  filter(str_detect(conference,"Big Ten")) %>% 
+  filter(str_detect(type, "STEAL")) %>% 
+  filter(str_detect(period, "1"))  %>% 
+group_by(team) %>% 
+summarize(total_steals=n()) %>% 
+  arrange(desc(total_steals))
+```
+**A1. Maryland had 192 steals in the first quarter, which led the Big Ten.
+
+
+
+
+```{r}
+# question #2 
+# Which team forced the most steals in the fourth quarter all season?
+fourq_steals <- pbp_2023 %>%
+  #group_by(period,team,conference) %>%
+  #summarize()
+  filter(str_detect(type, "STEAL")) %>%
+  filter(str_detect(period,"4")) %>%
+group_by(team)%>%
+summarize(total_steals=n()) %>%
+  arrange(desc(total_steals))
+```
+**A2. The Terps collected 158 steals in the fourth quarter.
+
+```{r}
+# question #3
+# Which team grabbed the most rebounds in the fourth quarter?
+rebounds_wbb <- pbp_2023  %>%
+filter(str_detect(action,"REBOUND")) %>%
+filter(str_detect(period, "4")) %>%
+group_by(team)%>%
+summarize(total_rebounds=n())%>%
+  arrange(desc(total_rebounds))
+```
+** Maryland grabbed the most rebounds in the fourth quarter with 612.
+
 
 
 ```
