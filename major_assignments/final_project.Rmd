@@ -37,7 +37,12 @@ group_by(team) %>%
 summarize(total_steals=n()) %>% 
   arrange(desc(total_steals))
 ```
-**A1** Maryland had 192 steals in the first quarter, which led the Big Ten.
+**A1** Ohio State led the Big Ten in steals with 406 total steals and 11.3 per game, but their data was not featured in the data frame provided. However, Maryland had 192 steals in the first quarter, which led the conference.
+
+```{r}
+
+```
+
 
 
 
@@ -45,9 +50,9 @@ summarize(total_steals=n()) %>%
 ```{r}
 # question #2 
 # Which team forced the most steals in the fourth quarter all season?
-fourq_steals <- pbp_2023 %>%
-  #group_by(period,team,conference) %>%
+ #group_by(period,team,conference) %>%
   #summarize()
+fourq_steals <- pbp_2023 %>%
   filter(str_detect(type, "STEAL")) %>%
   filter(str_detect(period,"4")) %>%
 group_by(team)%>%
@@ -70,11 +75,12 @@ summarize(total_rebounds=n())%>%
 
 ```{r}
 # question 4 
-# which team made the most three pointers in the third quarter
+# which Big Ten team made the most three pointers in the third quarter
 three_pntrs <- pbp_2023 %>%
 filter(str_detect(type, "3PTR")) %>%
 filter(str_detect(period, "3")) %>%
-group_by(team)%>%
+filter(str_detect(conference))%>%
+group_by(conference)%>%
 summarize(total_threes=n())%>%
   arrange(desc(total_threes))
 ```
@@ -82,16 +88,22 @@ summarize(total_threes=n())%>%
 
 ```{r}
 # question 5
-# how many layups did Baylor guard Aijha Blackwell make in the fourth quarter all season?
-baylor_wbb <- pbp_2023 %>%
-filter(str_detect(team,"Baylor"))%>%
-filter(str_detect(player, "33")) %>%
+# who scored more layups in the fourth quarter: Oklahoma guard Madi Williams or Texas Tech guard Bre'Amber Scott?
+# Scott averaged 17.1 ppg, while Williams recorded 15.7 per game. 
+oktt_wbb <- pbp_2023 %>%
+filter(str_detect(team,"Oklahoma")) %>%
+filter(str_detect(player, "25")) %>%
 filter(str_detect(type, "LAYUP"))%>%
+filter(str_detect(period,"4"))%>%
+filter(str_detect(team,"Texas Tech"))%>%
+filter(str_detect(player,"23"))%>%
+filter(str_detect(type,"LAYUP"))%>%
+filter(str_detect(period,"4"))%>%
 group_by(player)%>%
 summarize(total_layups=n())%>%
   arrange(desc(total_layups))
 ```
-**A5** Baylor guard Aijha Blackwell made 13 layups in the fourth quarter during the season.
+**A5** 
 
 ```{r}
 # question 6
