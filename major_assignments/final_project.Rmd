@@ -16,6 +16,7 @@ pbp_2023 %>%
 ```{r}
 pbp_2023 %>% 
   filter(action=="REBOUND", period== 4) 
+filter()
 ```
 
 ```{r}
@@ -59,7 +60,22 @@ group_by(team)%>%
 summarize(total_steals=n()) %>%
   arrange(desc(total_steals))
 ```
-**A2** The Terps collected 158 steals in the fourth quarter.
+
+```{r}
+niagara_wbb <- pbp_2023  %>%
+filter(str_detect(type,"STEAL"))%>%
+filter(str_detect(team,"Niagara"))%>%
+filter(str_detect(period,"4")) %>%
+group_by(team)%>%
+summarize(total_steals=n()) %>%
+  arrange(desc(total_steals))
+```
+
+
+
+
+
+**A2** The Terps finished 19th in the country in steals, but led Division 1 with 158 steals in the fourth quarter. Niagara led the NCAA in steals with 15.2 per game and 472 total -- 120 of them in the final frame. Maryland's ability to force turnovers could have a played in a their first Elite Eight appearance since 2015. 
 
 ```{r}
 # question #3
@@ -75,31 +91,29 @@ summarize(total_rebounds=n())%>%
 
 ```{r}
 # question 4 
-# which Big Ten team made the most three pointers in the third quarter
-three_pntrs <- pbp_2023 %>%
-filter(str_detect(type, "3PTR")) %>%
-filter(str_detect(period, "3")) %>%
-filter(str_detect(conference))%>%
-group_by(conference)%>%
-summarize(total_threes=n())%>%
-  arrange(desc(total_threes))
+# which of the top 5 Big Ten teamw missed the most free throws in the fourth quarter under 30 seconds?
+fthrows_wbb <- pbp_2023 %>%
+filter(str_detect(type,"FT"))%>%
+filter(str_detect(action,"MISS"))%>%
+filter(str_detect(period,"4"))%>%
+filter(str_detect(conference,"Big Ten"))%>%
+filter(str_detect(team,"Wisconsin"))%>%
+filter(str_detect(team,"Maryland"))%>%
+filter(str_detect(team, "Ohio State"))%>%
+filter(str_detect(team,"Michigan"))%>%
+filter(stt_detect(seconds, "<30"))%>%
+
 ```
-**A4** Ironically, Maryland made the most three-pointers in the third quarter with 292.
+
 
 ```{r}
 # question 5
-# who scored more layups in the fourth quarter: Oklahoma guard Madi Williams or Texas Tech guard Bre'Amber Scott?
-# Scott averaged 17.1 ppg, while Williams recorded 15.7 per game. 
-oktt_wbb <- pbp_2023 %>%
-filter(str_detect(team,"Oklahoma")) %>%
-filter(str_detect(player, "25")) %>%
-filter(str_detect(type, "LAYUP"))%>%
-filter(str_detect(period,"4"))%>%
-filter(str_detect(team,"Texas Tech"))%>%
-filter(str_detect(player,"23"))%>%
-filter(str_detect(type,"LAYUP"))%>%
-filter(str_detect(period,"4"))%>%
-group_by(player)%>%
+# which conference made the most free throws in the fourth quarter?
+teamfts_wbb <- pbp_2023 %>%
+filter(str_detect(conference,"Big 12"))%>%
+filter(str_detect(action,"GOOD"))%>%
+filter(str_detect(type,"FT"))%>%
+group_by(conference)%>%
 summarize(total_layups=n())%>%
   arrange(desc(total_layups))
 ```
@@ -107,42 +121,58 @@ summarize(total_layups=n())%>%
 
 ```{r}
 # question 6
-# which team forced the most turnovers in the second quarter this season
-turnovers_wbb <- pbp_2023 %>%
-filter(str_detect(action,"TURNOVER")) %>%
-filter(str_detect(period,"2"))
-group_by(opponent) %>%
-summarize(total_turnovers=n())%>%
-arrange(desc(total_turnovers))
+# who are the top five teams with the most offensive rebounds in the third quarter and what did the results show?
+oboards_wbb <- pbp_2023 %>%
+filter(str_detect(action,"REBOUND")) %>%
+filter(str_detect(type,"OFF"))%>%
+group_by(team) %>%
+summarize(total_orebs=n())%>%
+arrange(desc(total_orebs))
 ```
-
+**A6**The top five teams in offensive rebounds are UMD, Troy, Tennessee,Texas, and Memphis. Only three teams (UMD,Tennessee,Texas) made it to the NCAA Tournament. It's quite surprising Maryland has 240 more rebounds than Tennessee because they didn't posses great size this season. Tennessee guard Jordan Horston was fifth in the SEC with five rebounds a game, while the Terps didn't have in the conference's top 10 ranks.
 ```{r}
 # question 7
-# how many points three pointers did Brinae Alexander score in the third quarter all season?
+# how many points three pointers did Brinae Alexander and Alex Giannaros make in the third quarter all season?
 umd_alexander <- pbp_2023%>%
 filter(str_detect(team,"Maryland"))%>%
 filter(str_detect(player, "05")) %>%
 filter(str_detect(type,"3PTR")) %>%
 filter(str_detect(action,"GOOD")) %>%
 filter(str_detect(period,"3")) %>%
+filter(str_detect(team,"Boston U"))%>%
+filter(str_detect(player, "10")) %>%
+filter(str_detect(type,"3PTR")) %>%
+filter(str_detect(action,"GOOD")) %>%
 group_by(player)%>%
 summarize(alexander_threes=n())%>%
   arrange(desc(alexander_threes))
 ```
-**A7** Maryland guard Brinae Alexander made 34 three-pointers in the third quarter.
+**A7**I want to compare and see where Alexander ranks amongst the top best shooter in the country.
 
 
 ```{r}
 # question 8
-# which team committed the most fouls in the first quarter this season?
+# which team committed the most fouls in the fourth quarter this season?
 fouls_total <- pbp_2023 %>%
 filter(str_detect(action,"FOUL")) %>%
-filter(str_detect(period,"1")) %>%
+filter(str_detect(period,"4")) %>%
 group_by(team)%>%
 summarize(total_fouls=n())%>%
   arrange(desc(total_fouls))
 ```
-**A9** This season,Maryland had the most first quarter fouls with 196.
+**A9** This season, Maryland had the most fourth quarter fouls with 364. Only three out of the first ten entries are power five schools. 
 
+```{r}
+# question 9
+# which team missed the most free throws in the fourth quarter?
+fourq_fts <- pbp_2023%>%
+filter(str_detect(action,"MISS"))%>%
+filter(str_detect(type,"FT"))%>%
+filter(str_detect(period,"4"))%>%
+group_by(team)%>%
+summarize(total_fts=n())%>%
+  arrange(desc(total_fts))
+```
+**A9** East Carolina and James Madison were the only teams in the top 10 in missed fourth quarter free throws to win their conference championships. If other teams made strides in this area,they could have added to their win total.
 ```
 
