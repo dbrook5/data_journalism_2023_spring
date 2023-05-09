@@ -16,6 +16,7 @@ pbp_2023 %>%
 ```{r}
 pbp_2023 %>% 
   filter(action=="REBOUND", period== 4) 
+filte4(type="OFF")
 filter()
 ```
 
@@ -70,11 +71,6 @@ group_by(team)%>%
 summarize(total_steals=n()) %>%
   arrange(desc(total_steals))
 ```
-
-
-
-
-
 **A2** The Terps finished 19th in the country in steals, but led Division 1 with 158 steals in the fourth quarter. Niagara led the NCAA in steals with 15.2 per game and 472 total -- 120 of them in the final frame. Maryland's ability to force turnovers could have a played in a their first Elite Eight appearance since 2015. 
 
 ```{r}
