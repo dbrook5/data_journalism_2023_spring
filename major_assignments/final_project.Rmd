@@ -52,8 +52,6 @@ summarize(total_steals=n()) %>%
 ```{r}
 # question #2 
 # Which team forced the most steals in the fourth quarter all season?
- #group_by(period,team,conference) %>%
-  #summarize()
 fourq_steals <- pbp_2023 %>%
   filter(str_detect(type, "STEAL")) %>%
   filter(str_detect(period,"4")) %>%
@@ -83,35 +81,33 @@ group_by(team)%>%
 summarize(total_rebounds=n())%>%
   arrange(desc(total_rebounds))
 ```
-**A3** Maryland grabbed the most rebounds in the fourth quarter with 612.
+**A3** Maryland grabbed the most rebounds in the fourth quarter with 612. The Terps 
 
 ```{r}
 # question 4 
-# which of the top 5 Big Ten teamw missed the most free throws in the fourth quarter under 30 seconds?
+# which of the top 5 Big Ten teams missed the most free throws in the fourth quarter under 30 seconds?
 fthrows_wbb <- pbp_2023 %>%
+  filter(seconds <30) %>% 
 filter(str_detect(type,"FT"))%>%
 filter(str_detect(action,"MISS"))%>%
 filter(str_detect(period,"4"))%>%
 filter(str_detect(conference,"Big Ten"))%>%
-filter(str_detect(team,"Wisconsin"))%>%
-filter(str_detect(team,"Maryland"))%>%
-filter(str_detect(team, "Ohio State"))%>%
-filter(str_detect(team,"Michigan"))%>%
-filter(stt_detect(seconds, "<30"))%>%
-
+group_by(team)%>%
+summarise(missed_fts=n()) %>%
+arrange(desc(missed_fts))
 ```
-
+**A4**Maryland was the Big Ten team that missed the most free throws with 30 seconds or less remaining with 22 on the season. The next closest teams are Nebraska and Northwestern, which are teams near the bottom of the conference. The Terps finished in the top 3 of the conference and were a game from the Final Four.
 
 ```{r}
 # question 5
-# which conference made the most free throws in the fourth quarter?
+# which power five conference made the most free throws in the fourth quarter?
 teamfts_wbb <- pbp_2023 %>%
 filter(str_detect(conference,"Big 12"))%>%
 filter(str_detect(action,"GOOD"))%>%
 filter(str_detect(type,"FT"))%>%
 group_by(conference)%>%
-summarize(total_layups=n())%>%
-  arrange(desc(total_layups))
+summarize(made_fts=n())%>%
+  arrange(desc(made_fts))
 ```
 **A5** 
 
@@ -126,24 +122,30 @@ summarize(total_orebs=n())%>%
 arrange(desc(total_orebs))
 ```
 **A6**The top five teams in offensive rebounds are UMD, Troy, Tennessee,Texas, and Memphis. Only three teams (UMD,Tennessee,Texas) made it to the NCAA Tournament. It's quite surprising Maryland has 240 more rebounds than Tennessee because they didn't posses great size this season. Tennessee guard Jordan Horston was fifth in the SEC with five rebounds a game, while the Terps didn't have in the conference's top 10 ranks.
+
+```{r}
+# load in data for Brinae Alexander's question
+player_totals <- read_csv ("player_totals_with_teams_2023.csv")
+
+```
+
+
+
 ```{r}
 # question 7
 # how many points three pointers did Brinae Alexander and Alex Giannaros make in the third quarter all season?
-umd_alexander <- pbp_2023%>%
-filter(str_detect(team,"Maryland"))%>%
-filter(str_detect(player, "05")) %>%
-filter(str_detect(type,"3PTR")) %>%
-filter(str_detect(action,"GOOD")) %>%
-filter(str_detect(period,"3")) %>%
-filter(str_detect(team,"Boston U"))%>%
-filter(str_detect(player, "10")) %>%
-filter(str_detect(type,"3PTR")) %>%
-filter(str_detect(action,"GOOD")) %>%
-group_by(player)%>%
-summarize(alexander_threes=n())%>%
-  arrange(desc(alexander_threes))
+player_totals%>%
+filter(fg3m >=50) %>% 
+#filter(player == "Brinae Alexander" | player== "Alex Giannaros") %>%
+arrange(desc(fg3m)) %>% 
+select(player, team, fg3m, fg3m_pct, fg3_rate)%>% 
+ggplot() +
+  geom_point(aes(x=fg3m_pct,y=fg3_rate)) +
+  geom_smooth(aes(x=fg3m_pct,y=fg3_rate), method="lm")
 ```
-**A7**I want to compare and see where Alexander ranks amongst the top best shooter in the country.
+**A7**I created a scatterplot based on Division 1 women's basketball players that have made at least 50 three pointers this season. One of the first things I noticed was the blue line in the middle of the scatter plot was nearly flat compared to other examples in pre_lab_14. I counted 11 outliers on the plot that allowed me to formulate an opinion. Another observation that I noticed was that most of the players shooting at least 50% from distance are players from mid-major conferences.
+
+Based on the scatterplot, I noticed a lot of points in the middle of the plot, which I believe symbolizes that most of the shooters were within a percentage of 30%-40%. However, the data shows that the fg3_rate fluctuates from 25% to 75%, providing a visual representation of the percentage of their shots that resulted in three point attempts. 
 
 
 ```{r}
@@ -170,5 +172,17 @@ summarize(total_fts=n())%>%
   arrange(desc(total_fts))
 ```
 **A9** East Carolina and James Madison were the only teams in the top 10 in missed fourth quarter free throws to win their conference championships. If other teams made strides in this area,they could have added to their win total.
+```{r}
+npoy_wbb <- player_totals%>%
+filter(str_detect(player,"Caitlin Clark"))
+
+
+
+
+
+group_by(player)
 ```
+
+
+
 
