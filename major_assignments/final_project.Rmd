@@ -15,8 +15,8 @@ pbp_2023 %>%
 ```
 ```{r}
 pbp_2023 %>% 
-  filter(action=="REBOUND", period== 4) 
-filte4(type="OFF")
+  filter(action=="REBOUND", period== 4)%>% 
+filter(type=="OFF")%>% 
 filter()
 ```
 
@@ -39,15 +39,7 @@ group_by(team) %>%
 summarize(total_steals=n()) %>% 
   arrange(desc(total_steals))
 ```
-**A1** Ohio State led the Big Ten in steals with 406 total steals and 11.3 per game, but their data was not featured in the data frame provided. However, Maryland had 192 steals in the first quarter, which led the conference.
-
-```{r}
-
-```
-
-
-
-
+**A1** Ohio State led the Big Ten in steals with 406 total steals and 11.3 per game, but their data was not featured in the data frame provided. However, Maryland had 192 steals in the first quarter, which led the conference. I believe this could possibly lead to a feature story about how the pressure of Ohio State's full court press is impactful in each quarter and possibly responsible for their fast start to the season.
 
 ```{r}
 # question #2 
@@ -59,8 +51,9 @@ group_by(team)%>%
 summarize(total_steals=n()) %>%
   arrange(desc(total_steals))
 ```
-
+**A2**The codeblock produced a conclusion of that Maryland recorded the most steals in the fourth quarter with 158. The Terps were a team that consistently jumped passing lanes for steals to give more possessions for its transition offense. Maryland had good perimeter length defensively with Shyanne Sellers and Abby Meyers, so this seems accurate.I believe Maryland benefitted by dominating inferior Big Ten opponents with hellacious defense in the fourth quarter.
 ```{r}
+# question 3
 niagara_wbb <- pbp_2023  %>%
 filter(str_detect(type,"STEAL"))%>%
 filter(str_detect(team,"Niagara"))%>%
@@ -69,19 +62,7 @@ group_by(team)%>%
 summarize(total_steals=n()) %>%
   arrange(desc(total_steals))
 ```
-**A2** The Terps finished 19th in the country in steals, but led Division 1 with 158 steals in the fourth quarter. Niagara led the NCAA in steals with 15.2 per game and 472 total -- 120 of them in the final frame. Maryland's ability to force turnovers could have a played in a their first Elite Eight appearance since 2015. 
-
-```{r}
-# question #3
-# Which team grabbed the most rebounds in the fourth quarter?
-rebounds_wbb <- pbp_2023  %>%
-filter(str_detect(action,"REBOUND")) %>%
-filter(str_detect(period, "4")) %>%
-group_by(team)%>%
-summarize(total_rebounds=n())%>%
-  arrange(desc(total_rebounds))
-```
-**A3** Maryland grabbed the most rebounds in the fourth quarter with 612. The Terps 
+**A3** The Terps finished 19th in the country in steals, but led Division 1 with 158 steals in the fourth quarter. Niagara led the NCAA in steals with 15.2 per game and 472 total -- 120 of them in the final frame. Maryland's ability to force turnovers could have a played in a their first Elite Eight appearance since 2015. 
 
 ```{r}
 # question 4 
@@ -98,21 +79,9 @@ arrange(desc(missed_fts))
 ```
 **A4**Maryland was the Big Ten team that missed the most free throws with 30 seconds or less remaining with 22 on the season. The next closest teams are Nebraska and Northwestern, which are teams near the bottom of the conference. The Terps finished in the top 3 of the conference and were a game from the Final Four.
 
-```{r}
-# question 5
-# which power five conference made the most free throws in the fourth quarter?
-teamfts_wbb <- pbp_2023 %>%
-filter(str_detect(conference,"Big 12"))%>%
-filter(str_detect(action,"GOOD"))%>%
-filter(str_detect(type,"FT"))%>%
-group_by(conference)%>%
-summarize(made_fts=n())%>%
-  arrange(desc(made_fts))
-```
-**A5** 
 
 ```{r}
-# question 6
+# question 5
 # who are the top five teams with the most offensive rebounds in the third quarter and what did the results show?
 oboards_wbb <- pbp_2023 %>%
 filter(str_detect(action,"REBOUND")) %>%
@@ -121,7 +90,7 @@ group_by(team) %>%
 summarize(total_orebs=n())%>%
 arrange(desc(total_orebs))
 ```
-**A6**The top five teams in offensive rebounds are UMD, Troy, Tennessee,Texas, and Memphis. Only three teams (UMD,Tennessee,Texas) made it to the NCAA Tournament. It's quite surprising Maryland has 240 more rebounds than Tennessee because they didn't posses great size this season. Tennessee guard Jordan Horston was fifth in the SEC with five rebounds a game, while the Terps didn't have in the conference's top 10 ranks.
+**A5**The top five teams in offensive rebounds are UMD, Troy, Tennessee,Texas, and Memphis. Only three teams (UMD,Tennessee,Texas) made it to the NCAA Tournament. It's quite surprising Maryland has 240 more rebounds than Tennessee because they didn't posses great size this season. Tennessee guard Jordan Horston was fifth in the SEC with five rebounds a game, while the Terps didn't have in the conference's top 10 ranks.
 
 ```{r}
 # load in data for Brinae Alexander's question
@@ -129,10 +98,8 @@ player_totals <- read_csv ("player_totals_with_teams_2023.csv")
 
 ```
 
-
-
 ```{r}
-# question 7
+# question 6
 # how many points three pointers did Brinae Alexander and Alex Giannaros make in the third quarter all season?
 player_totals%>%
 filter(fg3m >=50) %>% 
@@ -143,25 +110,14 @@ ggplot() +
   geom_point(aes(x=fg3m_pct,y=fg3_rate)) +
   geom_smooth(aes(x=fg3m_pct,y=fg3_rate), method="lm")
 ```
-**A7**I created a scatterplot based on Division 1 women's basketball players that have made at least 50 three pointers this season. One of the first things I noticed was the blue line in the middle of the scatter plot was nearly flat compared to other examples in pre_lab_14. I counted 11 outliers on the plot that allowed me to formulate an opinion. Another observation that I noticed was that most of the players shooting at least 50% from distance are players from mid-major conferences.
+**A6**I created a scatterplot based on Division 1 women's basketball players that have made at least 50 three pointers this season. One of the first things I noticed was the blue line in the middle of the scatter plot was nearly flat compared to other examples in pre_lab_14. I counted 11 outliers on the plot that allowed me to formulate an opinion. Another observation that I noticed was that most of the players shooting at least 50% from distance are players from mid-major conferences.
 
 Based on the scatterplot, I noticed a lot of points in the middle of the plot, which I believe symbolizes that most of the shooters were within a percentage of 30%-40%. However, the data shows that the fg3_rate fluctuates from 25% to 75%, providing a visual representation of the percentage of their shots that resulted in three point attempts. 
 
 
-```{r}
-# question 8
-# which team committed the most fouls in the fourth quarter this season?
-fouls_total <- pbp_2023 %>%
-filter(str_detect(action,"FOUL")) %>%
-filter(str_detect(period,"4")) %>%
-group_by(team)%>%
-summarize(total_fouls=n())%>%
-  arrange(desc(total_fouls))
-```
-**A9** This season, Maryland had the most fourth quarter fouls with 364. Only three out of the first ten entries are power five schools. 
 
 ```{r}
-# question 9
+# question 7
 # which team missed the most free throws in the fourth quarter?
 fourq_fts <- pbp_2023%>%
 filter(str_detect(action,"MISS"))%>%
@@ -171,18 +127,29 @@ group_by(team)%>%
 summarize(total_fts=n())%>%
   arrange(desc(total_fts))
 ```
-**A9** East Carolina and James Madison were the only teams in the top 10 in missed fourth quarter free throws to win their conference championships. If other teams made strides in this area,they could have added to their win total.
+**A7** East Carolina and James Madison were the only teams in the top 10 in missed fourth quarter free throws to win their conference championships. If other teams made strides in this area,they could have added to their win total. I believe the data also shows that East Carolina and James Madison may have closed its fair share of victories by making free throws in the fourth quarter.
 ```{r}
-npoy_wbb <- player_totals%>%
-filter(str_detect(player,"Caitlin Clark"))
-
-
-
-
-
-group_by(player)
+# question 8
+# which conference had the most fourth quarter offensive rebounds this season?
+pbp_2023 %>% 
+filter(action=="REBOUND", period== 4)%>% 
+filter(type=="OFF")%>% 
+filter()%>% 
+group_by(conference)%>%
+summarize(total_orebs=n())%>%
+arrange(desc(total_orebs))
 ```
+**A8**After generating the following codeblock, I received 33 rows of data, in order from highest to lowest, with the conferences with the most offensive rebounds in the fourth quarter. One of my first impressions was that the top three were mid major conferences. I think the story could be looked into is "If power five schools recruit top talent, why are they losing the rebounding battle by such a large margin?"I wonder if the offensive boards are short or long because it could be an indicator of the shot attempted.
 
-
-
+```{r}
+# which  big ten team made the most substitutions?
+subs_2023 <- pbp_2023  %>%
+filter(str_detect(action,"SUBS")) %>%
+filter(str_detect(type,"SUBS")) %>%
+filter()%>%
+group_by(team)%>%
+summarise(total_subs=n())%>%
+arrange(desc(total_subs))
+```
+**A9**Based on the results of the codeblock, it shows that Maryland had the most substitutions with 1,542. I think it would be interesting to compare this stat to other seasons for the Terps. Maryland lacked size this season and had to play a different way to be successful. The Terps had to utilize their speed to make up for their size disadvantage. This season, Maryland’s bench had a few players (Brinae Alexander and Lavender Briggs) with explosive scoring capabilities. With Maryland’s preferred pace of play, it’s understandable if head coach Brenda Frese wanted to sub players to keep them fresh. 
 
